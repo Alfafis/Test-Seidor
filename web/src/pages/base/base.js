@@ -8,31 +8,29 @@ import logo from "../../assets/logo.png";
 
 const Base = () => {
   const [dados, setDados] = useState([]);
-  const [pageNumber, SetpageNumber] = useState(0);
-  const arrayPerPage = 10;
-  const pagesVisited = pageNumber * arrayPerPage;
 
-  const displayDados = dados
-    .slice(pagesVisited, pagesVisited + arrayPerPage)
-    .map((data, i) => {
-      return (
-        <tr>
-          <td key={`${i + "a"}`}>{data.DataCad}</td>
-          <td key={`${i + "b"}`}>{data.Cargo}</td>
-          <td key={`${i + "c"}`}>{data.Cpf}</td>
-          <td key={`${i + "d"}`}>{data.Nome}</td>
-          <td key={`${i + "e"}`}>{data.UfNasc}</td>
-          <td key={`${i + "f"}`}>{data.Salario}</td>
-          <td key={`${i + "g"}`}>{data.Status}</td>
-        </tr>
-      );
-    });
+  //Paginacao em andamento
+  // const [pageNumber, SetpageNumber] = useState(0);
+  // const arrayPerPage = 10;
+  // const pagesVisited = pageNumber * arrayPerPage;
+  // const displayDados = dados.map((data, i) => {
+  //   return (
+  //     <tr>
+  //       <td key={`${i + "a"}`}>{data.DataCad}</td>
+  //       <td key={`${i + "b"}`}>{data.Cargo}</td>
+  //       <td key={`${i + "c"}`}>{data.Cpf}</td>
+  //       <td key={`${i + "d"}`}>{data.Nome}</td>
+  //       <td key={`${i + "e"}`}>{data.UfNasc}</td>
+  //       <td key={`${i + "f"}`}>{data.Salario}</td>
+  //       <td key={`${i + "g"}`}>{data.Status}</td>
+  //     </tr>
+  //   );
+  // });
 
   useEffect(() => {
     api.get("/").then((response) => {
-      const length = response.data.length;
       const res = response.data;
-      setDados(res.slice(0, 15));
+      setDados(res);
     });
   }, []);
 
@@ -89,7 +87,19 @@ const Base = () => {
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody>{displayDados}</tbody>
+            <tbody>
+              {dados.map((data, i) => (
+                <tr>
+                  <td key={`${i + "a"}`}>{data.DataCad}</td>
+                  <td key={`${i + "b"}`}>{data.Cargo}</td>
+                  <td key={`${i + "c"}`}>{data.Cpf}</td>
+                  <td key={`${i + "d"}`}>{data.Nome}</td>
+                  <td key={`${i + "e"}`}>{data.UfNasc}</td>
+                  <td key={`${i + "f"}`}>{data.Salario}</td>
+                  <td key={`${i + "g"}`}>{data.Status}</td>
+                </tr>
+              ))}
+            </tbody>
           </table>
           <div className="paginate">
             <button type="button" className="page"></button>
